@@ -1,7 +1,9 @@
 ﻿@page "/details/{ProductId:int}"
-@using TangyWeb_Client.ViewModels
 @inject IProductService _productService
-
+@inject ICartService _cartService
+@inject NavigationManager _navigationManager
+@inject IJSRuntime _jsRuntime
+@using TangyWeb_Client.ViewModels
 
 @if (IsProcessing)
 {
@@ -107,7 +109,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         IsProcessing = true;
-        Product = await _productService.Get(ProductId);
+        Product = await _productService.Get(ProductId);        
         IsProcessing = false;
     }
 
@@ -119,6 +121,15 @@ else
 
     private async Task AddToCart()
     {
-        
+        ShoppingCart shoppingCart = new()
+            {
+                Count = DetailsVM.Count,
+                ProductId = ProductId,
+                ProductPriceId = DetailsVM.SelectedProductPriceId
+            };
+
+            await _cartService.IncrementCart(shoppingCart);
+            _navigationManager.NavigateTo("/");
+            await _jsRuntime.ToastrSuccess("Product added to cart successfully");
     }
 }
