@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tangy_Common
 {
-    public static class SD
+    public static class SD                                             // SD -> Static Detail
     {
         public const string ShoppingCart = "ShoppingCart";
 
@@ -15,5 +15,8 @@ namespace Tangy_Common
         public const string Status_Shipped = "Shipped";
         public const string Status_Refunded = "Refunded";
         public const string Status_Cancelled = "Cancelled";
+
+        public const string Role_Admin = "Admin";
+        public const string Role_Customer = "Customer";
     }
 }

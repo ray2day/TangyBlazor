@@ -44,6 +44,7 @@
                 <span class="oi oi-list-rich" aria-hidden="true"></span> LifeCycle
             </NavLink>
         </div>
+        <AuthorizeView Roles="@roleAdmin">
           <div class="nav-item px-3">
             <NavLink class="nav-link" href="/category">
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Category
@@ -54,10 +55,13 @@
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Product
             </NavLink>
         </div>
+        </AuthorizeView>
     </nav>
 </div>
 
 @code {
+    private string roleAdmin = Tangy_Common.SD.Role_Admin;
+
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
