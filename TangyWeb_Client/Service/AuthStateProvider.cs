@@ -21,7 +21,7 @@ namespace TangyWeb_Client.Service
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var token = await _localStorage.GetItemAsync<string>(SD.Local_Token);
-            if (token == null)
+            if (token==null)
             {
                 return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
             }

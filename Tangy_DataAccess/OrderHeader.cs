@@ -27,7 +27,7 @@ namespace Tangy_DataAccess
         public string Status { get; set; }
 
         // stripe payment
-        public string? SessionID { get; set; }
+        public string? SessionId { get; set; }
         public string? PaymentIntentId { get; set; }
 
         [Required]

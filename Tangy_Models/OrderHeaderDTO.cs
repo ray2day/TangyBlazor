@@ -26,15 +26,15 @@ namespace Tangy_Models
         [Required]
         public string Status { get; set; }
 
-        // stripe payment
-        public string? SessionID { get; set; }
+        //stripe payment
+        public string? SessionId { get; set; }
         public string? PaymentIntentId { get; set; }
 
         [Display(Name = "Name")]
         [Required]
         public string Name { get; set; }
         [Required]
-        [Display(Name = "Phone Numer")]
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
         [Required]
         [Display(Name = "Street Address")]
@@ -49,5 +49,8 @@ namespace Tangy_Models
         [Display(Name = "Email")]
         [Required]
         public string Email { get; set; }
+        public string? Tracking { get; set; }
+        public string? Carrier { get; set; }
+
     }
 }

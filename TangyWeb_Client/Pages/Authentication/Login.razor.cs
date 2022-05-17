@@ -12,18 +12,19 @@ namespace TangyWeb_Client.Pages.Authentication
         public bool ShowSignInErrors { get; set; }
         public string Errors { get; set; }
 
-        [Inject] public IAuthenticationService _authService { get; set; }
-        [Inject] public NavigationManager _navigationManager { get; set; }
+        [Inject]
+        public IAuthenticationService _authService { get; set; }
+        [Inject]
+        public NavigationManager _navigationManager { get; set; }
         public string ReturnUrl { get; set; }
-
         private async Task LoginUser()
         {
-            ShowSignInErrors = false;
-            IsProcessing = true;
+            ShowSignInErrors=false;
+            IsProcessing=true;
             var result = await _authService.Login(SignInRequest);
             if (result.IsAuthSuccessful)
             {
-                // login is successful
+                //regiration is successful
                 var absoluteUri = new Uri(_navigationManager.Uri);
                 var queryParam = HttpUtility.ParseQueryString(absoluteUri.Query);
                 ReturnUrl = queryParam["returnUrl"];
@@ -38,12 +39,12 @@ namespace TangyWeb_Client.Pages.Authentication
             }
             else
             {
-                // login failure
-                Errors = result.ErrorMessage;
-                ShowSignInErrors = true;
-            }
-            IsProcessing = false;
-        }
+                //failure
+                Errors=result.ErrorMessage;
+                ShowSignInErrors=true;
 
+            }
+            IsProcessing=false;
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿@page "/register"
 
 <EditForm Model="SignUpRequest" OnValidSubmit="RegisterUser" class="pt-4">
-    <DataAnnotationsValidator />
+    <DataAnnotationsValidator/>
     <div class="py-4">
         <div class=" row form-group ">
             <div class="col-6 offset-3 ">
@@ -25,29 +25,29 @@
                             <ValidationMessage For="(()=>SignUpRequest.Name)" />
                         </div>
                         <div class="py-2">
-                            <InputText @bind-Value="SignUpRequest.Email" class="form-control" placeholder="Email..." />
+                            <InputText @bind-Value="SignUpRequest.Email" type="text" class="form-control" placeholder="Email..." />
                             <ValidationMessage For="(()=>SignUpRequest.Email)" />
                         </div>
                         <div class="py-2 input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"> +1</span>
                             </div>
-                            <InputText @bind-Value="SignUpRequest.PhoneNumber" class="form-control" placeholder="Phone number..." />
+                            <InputText @bind-Value="SignUpRequest.PhoneNumber" type="text" class="form-control"  placeholder="Phone number..." />
                             <ValidationMessage For="(()=>SignUpRequest.PhoneNumber)" />
                         </div>
                         <div class="form-row py-2">
                             <div class="col">
-                                <InputText @bind-Value="SignUpRequest.Password" id="password" placeholder="Password..." class="form-control" />
+                               <InputText @bind-Value="SignUpRequest.Password"  type="password" id="password" placeholder="Password..." class="form-control" />
                                 <ValidationMessage For="(()=>SignUpRequest.Password)" />
-                            </div>
+                                    </div>
                             <div class="col py-2">
-                                <InputText @bind-Value="SignUpRequest.ConfirmPassword" id="confirm" class="form-control" placeholder="Confirm Password..." />
+                                <InputText @bind-Value="SignUpRequest.ConfirmPassword"  type="password" id="confirm" class="form-control" placeholder="Confirm Password..." />
                                 <ValidationMessage For="(()=>SignUpRequest.ConfirmPassword)" />
                             </div>
                         </div>
                         <hr style="background-color:aliceblue" />
                         <div class="py-2">
-                            <button type="submit" class="btn btn-success btn-block"><i class="bi bi-person-plus-fill"></i> Register</button>
+                                <button type="submit" class="btn btn-success btn-block"><i class="bi bi-person-plus-fill"></i> Register</button>
                         </div>
                     </div>
                 </div>
@@ -55,4 +55,6 @@
         </div>
     </div>
 </EditForm>
+
+
 

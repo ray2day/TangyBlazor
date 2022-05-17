@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Tangy_Business.Repository.IRepository;
 using Tangy_Common;
@@ -26,22 +25,22 @@ namespace TangyWeb_API.Controllers
         [HttpGet("{productId}")]
         public async Task<IActionResult> Get(int? productId)
         {
-            if(productId == null || productId == 0)
+            if (productId==null || productId==0)
             {
                 return BadRequest(new ErrorModelDTO()
                 {
-                    ErrorMessage = "Invalid Id",
-                    StatusCode = StatusCodes.Status400BadRequest
+                    ErrorMessage="Invalid Id",
+                    StatusCode=StatusCodes.Status400BadRequest
                 });
             }
 
             var product = await _productRepository.Get(productId.Value);
-            if (product == null)
+            if (product==null)
             {
                 return BadRequest(new ErrorModelDTO()
                 {
-                    ErrorMessage = "Invalid Id",
-                    StatusCode = StatusCodes.Status404NotFound
+                    ErrorMessage="Invalid Id",
+                    StatusCode=StatusCodes.Status404NotFound
                 });
             }
 

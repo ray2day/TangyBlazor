@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Tangy_Business.Repository.IRepository;
 using Tangy_Models;
 
@@ -24,26 +23,35 @@ namespace TangyWeb_API.Controllers
         [HttpGet("{orderHeaderId}")]
         public async Task<IActionResult> Get(int? orderHeaderId)
         {
-            if(orderHeaderId == null || orderHeaderId == 0)
+            if (orderHeaderId==null || orderHeaderId==0)
             {
                 return BadRequest(new ErrorModelDTO()
                 {
-                    ErrorMessage = "Invalid Id",
-                    StatusCode = StatusCodes.Status400BadRequest
+                    ErrorMessage="Invalid Id",
+                    StatusCode=StatusCodes.Status400BadRequest
                 });
             }
 
             var orderHeader = await _orderRepository.Get(orderHeaderId.Value);
-            if (orderHeader == null)
+            if (orderHeader==null)
             {
                 return BadRequest(new ErrorModelDTO()
                 {
-                    ErrorMessage = "Invalid Id",
-                    StatusCode = StatusCodes.Status404NotFound
+                    ErrorMessage="Invalid Id",
+                    StatusCode=StatusCodes.Status404NotFound
                 });
             }
 
             return Ok(orderHeader);
+        }
+
+        [HttpPost]
+        [ActionName("Create")]
+        public async Task<IActionResult> Create([FromBody] StripePaymentDTO paymentDTO)
+        {
+            paymentDTO.Order.OrderHeader.OrderDate=DateTime.Now;
+            var result = await _orderRepository.Create(paymentDTO.Order);
+            return Ok(result);  
         }
     }
 }

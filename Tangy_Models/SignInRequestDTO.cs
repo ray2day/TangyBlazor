@@ -9,7 +9,7 @@ namespace Tangy_Models
 {
     public class SignInRequestDTO
     {
-        [Required(ErrorMessage = "UserName is required")]
+        [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid email address")]
         public string UserName { get; set; }
 
