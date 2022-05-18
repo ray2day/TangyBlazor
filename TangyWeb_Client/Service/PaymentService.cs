@@ -32,10 +32,13 @@ namespace TangyWeb_Client.Service
                     throw new Exception(errorModel.ErrorMessage);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
+
+
+       
     }
 }

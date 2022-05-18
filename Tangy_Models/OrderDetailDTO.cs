@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tangy_Models;
 
 namespace Tangy_Models
 {
@@ -16,7 +17,7 @@ namespace Tangy_Models
 
         [Required]
         public int ProductId { get; set; }
-        public virtual ProductDTO Product { get; set; }
+        public ProductDTO Product { get; set; }
 
         [Required]
         public int Count { get; set; }
@@ -26,5 +27,7 @@ namespace Tangy_Models
         public string Size { get; set; }
         [Required]
         public string ProductName { get; set; }
+
+
     }
 }
