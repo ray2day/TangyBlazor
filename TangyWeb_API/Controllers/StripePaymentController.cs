@@ -18,13 +18,12 @@ namespace TangyWeb_API.Controllers
 
 
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         [ActionName("Create")]
         public async Task<IActionResult> Create([FromBody] StripePaymentDTO paymentDTO)
         {
             try
             {
-
                 var domain = _configuration.GetValue<string>("Tangy_Client_URL");
 
                 var options = new SessionCreateOptions
@@ -45,7 +44,7 @@ namespace TangyWeb_API.Controllers
                         {
                             UnitAmount = (long)(item.Price*100), //20.00 -> 2000
                             Currency="usd",
-                            ProductData= new SessionLineItemPriceDataProductDataOptions
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
                             {
                                 Name= item.Product.Name
                             }

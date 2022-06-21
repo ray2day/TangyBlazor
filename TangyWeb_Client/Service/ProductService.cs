@@ -6,16 +6,17 @@ namespace TangyWeb_Client.Service
 {
     public class ProductService : IProductService
     {
+
         private readonly HttpClient _httpClient;
         private IConfiguration _configuration;
         private string BaseServerUrl;
-
         public ProductService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _configuration = configuration;
+            _configuration=configuration;
             BaseServerUrl = _configuration.GetSection("BaseServerUrl").Value;
         }
+
         public async Task<ProductDTO> Get(int productId)
         {
             var response = await _httpClient.GetAsync($"/api/product/{productId}");
@@ -36,7 +37,7 @@ namespace TangyWeb_Client.Service
         public async Task<IEnumerable<ProductDTO>> GetAll()
         {
             var response = await _httpClient.GetAsync("/api/product");
-            if(response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
                 var products = JsonConvert.DeserializeObject<IEnumerable<ProductDTO>>(content);

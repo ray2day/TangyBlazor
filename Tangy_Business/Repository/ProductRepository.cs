@@ -22,19 +22,20 @@ namespace Tangy_Business.Repository
             _db = db;
             _mapper = mapper;
         }
+
         public async Task<ProductDTO> Create(ProductDTO objDTO)
         {
             var obj = _mapper.Map<ProductDTO, Product>(objDTO);
-            var addedObj = _db.Products.Add(obj);
+           var addedObj =  _db.Products.Add(obj);
             await _db.SaveChangesAsync();
 
-            return _mapper.Map<Product, ProductDTO>(addedObj.Entity);
+           return _mapper.Map<Product, ProductDTO>(addedObj.Entity);
         }
 
         public async Task<int> Delete(int id)
         {
-            var obj = await _db.Products.FirstOrDefaultAsync(u => u.Id == id);
-            if (obj != null)
+            var obj = await _db.Products.FirstOrDefaultAsync(u => u.Id==id);
+            if (obj!=null)
             {
                 _db.Products.Remove(obj);
                 return await _db.SaveChangesAsync();
@@ -44,10 +45,10 @@ namespace Tangy_Business.Repository
 
         public async Task<ProductDTO> Get(int id)
         {
-            var obj = await _db.Products.Include(u=>u.Category).Include(u=>u.ProductPrices).FirstOrDefaultAsync(u => u.Id == id);
-            if (obj != null)
+            var obj = await _db.Products.Include(u=>u.Category).Include(u=>u.ProductPrices).FirstOrDefaultAsync(u => u.Id==id);
+            if (obj!=null)
             {
-                return _mapper.Map<Product, ProductDTO>(obj);
+               return _mapper.Map<Product, ProductDTO>(obj);
             }
             return new ProductDTO();
         }
@@ -59,14 +60,14 @@ namespace Tangy_Business.Repository
 
         public async Task<ProductDTO> Update(ProductDTO objDTO)
         {
-            var objFromDb = await _db.Products.FirstOrDefaultAsync(u => u.Id == objDTO.Id);
-            if (objFromDb != null)
+            var objFromDb = await _db.Products.FirstOrDefaultAsync(u => u.Id==objDTO.Id);
+            if (objFromDb!=null)
             {
-                objFromDb.Name = objDTO.Name;
+                objFromDb.Name=objDTO.Name;
                 objFromDb.Description = objDTO.Description;
                 objFromDb.ImageUrl = objDTO.ImageUrl;
                 objFromDb.CategoryId = objDTO.CategoryId;
-                objFromDb.Color = objDTO.Color;
+                objFromDb.Color= objDTO.Color;
                 objFromDb.ShopFavorites = objDTO.ShopFavorites;
                 objFromDb.CustomerFavorites = objDTO.CustomerFavorites;
                 _db.Products.Update(objFromDb);
@@ -74,6 +75,7 @@ namespace Tangy_Business.Repository
                 return _mapper.Map<Product, ProductDTO>(objFromDb);
             }
             return objDTO;
+
         }
     }
 }

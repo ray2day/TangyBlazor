@@ -13,62 +13,63 @@
     <div class="col-md-10">
         @if (IsLoading)
         {
-             <div class="text-center">
+            <div class="text-center">
                 <img src="/images/loading.gif">
-                    </div>
+            </div>
         }
-        else{
-        <EditForm Model="Product" OnValidSubmit="UpsertProduct">
-            <DataAnnotationsValidator/>
-            @*<ValidationSummary/>*@
-            <div class="form-group">
-                <label>Name</label>
-                <InputText @bind-Value="Product.Name" class="form-control"></InputText> 
-                <ValidationMessage For="()=>Product.Name"></ValidationMessage>
-            </div>
-             <div class="form-group">
-                <label>Color</label>
-                <InputText @bind-Value="Product.Color" class="form-control"></InputText> 
-                <ValidationMessage For="()=>Product.Color"></ValidationMessage>
-            </div>
-            
-            <div class="form-group">
-                 <label>Description</label>
-                 <SfRichTextEditor @bind-Value="Product.Description"></SfRichTextEditor>
-                 <ValidationMessage For="()=>Product.Description"></ValidationMessage>
-            </div>
+        else
+        {
+            <EditForm Model="Product" OnValidSubmit="UpsertProduct">
+                <DataAnnotationsValidator />
+                @*<ValidationSummary/>*@
+                <div class="form-group">
+                    <label>Name</label>
+                    <InputText @bind-Value="Product.Name" class="form-control"></InputText>
+                    <ValidationMessage For="()=>Product.Name"></ValidationMessage>
+                </div>
+                <div class="form-group">
+                    <label>Color</label>
+                    <InputText @bind-Value="Product.Color" class="form-control"></InputText>
+                    <ValidationMessage For="()=>Product.Color"></ValidationMessage>
+                </div>
 
-            <div class="row pt-3">
-                <div class="form-group col-6">
-                <div class="form-check">
-                    <InputCheckbox @bind-Value="Product.ShopFavorites" class="form-check-input"></InputCheckbox>
-                    <label class="form-check-label">Is Shop Favorites</label>
+                <div class="form-group">
+                    <label>Description</label>
+                    <SfRichTextEditor @bind-Value="Product.Description"></SfRichTextEditor>
+                    <ValidationMessage For="()=>Product.Description"></ValidationMessage>
                 </div>
-                </div>
-                <div class="form-group col-6">
-                <div class="form-check">
-                    <InputCheckbox @bind-Value="Product.CustomerFavorites" class="form-check-input"></InputCheckbox>
-                    <label class="form-check-label">Is Customer Favorites</label>
-                </div>
-                </div>
-                 <div class="form-group col-6">
-                     <label>Category</label>
-                    <InputSelect @bind-Value="Product.CategoryId" class="form-select">
-                        <option value="0" disabled="disabled" selected>--Select Category--</option> 
-                            @foreach(var cat in Categories)
+
+                <div class="row pt-3">
+                    <div class="form-group col-6">
+                        <div class="form-check">
+                            <InputCheckbox @bind-Value="Product.ShopFavorites" class="form-check-input"></InputCheckbox>
+                            <label class="form-check-label">Is Shop Favorites</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-6">
+                        <div class="form-check">
+                            <InputCheckbox @bind-Value="Product.CustomerFavorites" class="form-check-input"></InputCheckbox>
+                            <label class="form-check-label">Is Customer Favorites</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-6">
+                        <label>Category</label>
+                        <InputSelect @bind-Value="Product.CategoryId" class="form-select">
+                            <option value="0" disabled="disabled" selected>--Select Category--</option>
+                            @foreach (var cat in Categories)
                             {
-                                <option value="@cat.Id">@cat.Name</option>
+                            <option value="@cat.Id">@cat.Name</option>
                             }
 
                     </InputSelect>
-                     <ValidationMessage For="()=>Product.CategoryId"></ValidationMessage>
+                    <ValidationMessage For="()=>Product.CategoryId"></ValidationMessage>
                 </div>
                 <div class="form-group pt-4 col-6">
                     <InputFile OnChange="HandleImageUpload"></InputFile>
                 </div>
             </div>
 
-              
+
             <div class="form-group py-2">
                 <button class="btn btn-primary">@Title</button>
                 <NavLink href="product" class="btn btn-secondary">Back to Index</NavLink>
@@ -82,14 +83,13 @@
 </div>
 
 @code {
-
     [Parameter]
     public int Id { get; set; }
 
     private ProductDTO Product { get; set; } = new()
-    {
-        ImageUrl="/images/default.png"
-    };
+        {
+            ImageUrl = "/images/default.png"
+        };
     private IEnumerable<CategoryDTO> Categories { get; set; } = new List<CategoryDTO>();
     private string Title { get; set; } = "Create";
     public bool IsLoading { get; set; }
@@ -106,13 +106,13 @@
 
     private async Task LoadProduct()
     {
-        IsLoading=true;
+        IsLoading = true;
         StateHasChanged();
         Categories = await _categoryRepository.GetAll();
         if (Id != 0)
         {
             //update
-            Title="Update";
+            Title = "Update";
             Product = await _productRepository.Get(Id);
             OldImageUrl = Product.ImageUrl;
         }
@@ -120,7 +120,7 @@
         IsLoading = false;
         StateHasChanged();
     }
-    private  async Task UpsertProduct()
+    private async Task UpsertProduct()
     {
         if (Product.Id == 0)
         {
@@ -131,7 +131,7 @@
         else
         {
             //update
-            if (OldImageUrl!=Product.ImageUrl)
+            if (OldImageUrl != Product.ImageUrl)
             {
                 _fileUpload.DeleteFile(OldImageUrl);
 
@@ -149,7 +149,7 @@
         IsLoading = true;
         try
         {
-            if (e.GetMultipleFiles().Count>0)
+            if (e.GetMultipleFiles().Count > 0)
             {
                 foreach (var file in e.GetMultipleFiles())
                 {
@@ -169,9 +169,9 @@
             }
             IsLoading = false;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-             await _jsRuntime.ToastrError(ex.Message);
+            await _jsRuntime.ToastrError(ex.Message);
         }
     }
 }

@@ -10,6 +10,7 @@ using Tangy_Business.Repository.IRepository;
 using Tangy_DataAccess;
 using Tangy_DataAccess.Data;
 using TangyWeb_API.Helper;
+using Microsoft.AspNetCore.Cors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -75,7 +76,6 @@ builder.Services.AddAuthentication(opt =>
     };
 });
 
-
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
@@ -85,7 +85,6 @@ builder.Services.AddCors(o => o.AddPolicy("Tangy", builder =>
 }
 ));
 var app = builder.Build();
-
 
 StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe")["ApiKey"];
 
