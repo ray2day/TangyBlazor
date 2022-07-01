@@ -18,7 +18,7 @@ namespace TangyWeb_API.Controllers
 
 
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         [ActionName("Create")]
         public async Task<IActionResult> Create([FromBody] StripePaymentDTO paymentDTO)
         {
@@ -34,7 +34,6 @@ namespace TangyWeb_API.Controllers
                     Mode = "payment",
                     PaymentMethodTypes = new List<string> { "card" }
                 };
-
 
                 foreach (var item in paymentDTO.Order.OrderDetails)
                 {

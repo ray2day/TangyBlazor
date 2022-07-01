@@ -22,20 +22,21 @@ namespace Tangy_Business.Repository
             _db = db;
             _mapper = mapper;
         }
-        public async Task <CategoryDTO> Create(CategoryDTO objDTO)
+
+        public async Task<CategoryDTO> Create(CategoryDTO objDTO)
         {
             var obj = _mapper.Map<CategoryDTO, Category>(objDTO);
             obj.CreatedDate = DateTime.Now;
-            var addedObj = _db.Categories.Add(obj);
+           var addedObj =  _db.Categories.Add(obj);
             await _db.SaveChangesAsync();
 
-            return _mapper.Map<Category, CategoryDTO>(addedObj.Entity);
+           return _mapper.Map<Category, CategoryDTO>(addedObj.Entity);
         }
 
         public async Task<int> Delete(int id)
         {
-            var obj = await _db.Categories.FirstOrDefaultAsync(u => u.Id == id);
-            if (obj != null)
+            var obj = await _db.Categories.FirstOrDefaultAsync(u => u.Id==id);
+            if (obj!=null)
             {
                 _db.Categories.Remove(obj);
                 return await _db.SaveChangesAsync();
@@ -45,10 +46,10 @@ namespace Tangy_Business.Repository
 
         public async Task<CategoryDTO> Get(int id)
         {
-            var obj = await _db.Categories.FirstOrDefaultAsync(u => u.Id == id);
-            if (obj != null)
+            var obj = await _db.Categories.FirstOrDefaultAsync(u => u.Id==id);
+            if (obj!=null)
             {
-                return _mapper.Map<Category, CategoryDTO>(obj);
+               return _mapper.Map<Category, CategoryDTO>(obj);
             }
             return new CategoryDTO();
         }
@@ -60,15 +61,16 @@ namespace Tangy_Business.Repository
 
         public async Task<CategoryDTO> Update(CategoryDTO objDTO)
         {
-            var objFromDb = await _db.Categories.FirstOrDefaultAsync(u => u.Id == objDTO.Id);
-            if (objFromDb != null)
+            var objFromDb = await _db.Categories.FirstOrDefaultAsync(u => u.Id==objDTO.Id);
+            if (objFromDb!=null)
             {
-                objFromDb.Name = objDTO.Name;
+                objFromDb.Name=objDTO.Name;
                 _db.Categories.Update(objFromDb);
                 await _db.SaveChangesAsync();
                 return _mapper.Map<Category, CategoryDTO>(objFromDb);
             }
             return objDTO;
+
         }
     }
 }
