@@ -27,34 +27,36 @@ namespace Tangy_Business.Repository
 
         public async Task<OrderHeaderDTO> CancelOrder(int id)
         {
-            var orderHeader = await _db.OrderHeaders.FindAsync(id);
-            if (orderHeader == null)
-            {
-                return new OrderHeaderDTO();
-            }
+            throw new NotImplementedException();
 
-            if (orderHeader.Status == SD.Status_Pending)
-            {
-                orderHeader.Status = SD.Status_Cancelled;
-                await _db.SaveChangesAsync();
-            }
-            if (orderHeader.Status == SD.Status_Confirmed)
-            {
-                //refund
-                var options = new Stripe.RefundCreateOptions
-                {
-                    Reason = Stripe.RefundReasons.RequestedByCustomer,
-                    PaymentIntent = orderHeader.PaymentIntentId
-                };
+            //    var orderHeader = await _db.OrderHeaders.FindAsync(id);
+            //    if (orderHeader == null)
+            //    {
+            //        return new OrderHeaderDTO();
+            //    }
 
-                var service = new Stripe.RefundService();
-                Stripe.Refund refund = service.Create(options);
+            //    if (orderHeader.Status==SD.Status_Pending)
+            //    {
+            //        orderHeader.Status = SD.Status_Cancelled;
+            //        await _db.SaveChangesAsync();
+            //    }
+            //    if (orderHeader.Status == SD.Status_Confirmed)
+            //    {
+            //        //refund
+            //        var options = new Stripe.RefundCreateOptions
+            //        {
+            //            Reason= Stripe.RefundReasons.RequestedByCustomer,
+            //            PaymentIntent = orderHeader.PaymentIntentId
+            //        };
 
-                orderHeader.Status = SD.Status_Refunded;
-                await _db.SaveChangesAsync();
-            }
+            //        var service = new Stripe.RefundService();
+            //        Stripe.Refund refund = service.Create(options);
 
-            return _mapper.Map<OrderHeader, OrderHeaderDTO>(orderHeader);
+            //        orderHeader.Status = SD.Status_Refunded;
+            //        await _db.SaveChangesAsync();
+            //    }
+
+            //    return _mapper.Map<OrderHeader, OrderHeaderDTO>(orderHeader);
         }
 
         public async Task<OrderDTO> Create(OrderDTO objDTO)
@@ -157,22 +159,31 @@ namespace Tangy_Business.Repository
         {
             if (objDTO!=null)
             {
-                var orderHeaderFromDb = _db.OrderHeaders.FirstOrDefault(u => u.Id==objDTO.Id);
-                orderHeaderFromDb.Name = objDTO.Name;
-                orderHeaderFromDb.PhoneNumber = objDTO.PhoneNumber;
-                orderHeaderFromDb.Carrier=objDTO.Carrier;
-                orderHeaderFromDb.Tracking= objDTO.Tracking;
-                orderHeaderFromDb.StreetAddress=objDTO.StreetAddress;
-                orderHeaderFromDb.City=objDTO.City;
-                orderHeaderFromDb.State=objDTO.State;
-                orderHeaderFromDb.PostalCode=objDTO.PostalCode;
-                orderHeaderFromDb.Status=objDTO.Status;
-
+                var OrderHeader = _mapper.Map<OrderHeaderDTO, OrderHeader>(objDTO);
+                _db.OrderHeaders.Update(OrderHeader);
                 await _db.SaveChangesAsync();
-                return _mapper.Map<OrderHeader, OrderHeaderDTO>(orderHeaderFromDb);
+                return _mapper.Map<OrderHeader, OrderHeaderDTO>(OrderHeader);
             }
+
+            //    //if (objDTO!=null)
+            //    //{
+            //    //    var orderHeaderFromDb = _db.OrderHeaders.FirstOrDefault(u => u.Id==objDTO.Id);
+            //    //    orderHeaderFromDb.Name = objDTO.Name;
+            //    //    orderHeaderFromDb.PhoneNumber = objDTO.PhoneNumber;
+            //    //    orderHeaderFromDb.Carrier=objDTO.Carrier;
+            //    //    orderHeaderFromDb.Tracking= objDTO.Tracking;
+            //    //    orderHeaderFromDb.StreetAddress=objDTO.StreetAddress;
+            //    //    orderHeaderFromDb.City=objDTO.City;
+            //    //    orderHeaderFromDb.State=objDTO.State;
+            //    //    orderHeaderFromDb.PostalCode=objDTO.PostalCode;
+            //    //    orderHeaderFromDb.Status=objDTO.Status;
+
+            //    //    await _db.SaveChangesAsync();
+            //    //    return _mapper.Map<OrderHeader, OrderHeaderDTO>(orderHeaderFromDb);
+            //    //}
             return new OrderHeaderDTO();
         }
+
 
         public async Task<bool> UpdateOrderStatus(int orderId, string status)
         {
