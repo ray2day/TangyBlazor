@@ -14,7 +14,7 @@ namespace Tangy_DataAccess
 
         [Required]
         public string UserId { get; set; }
-        // add navigation property : #TODO
+        // add nagivation property : #TODO
 
         [Required]
         public double OrderTotal { get; set; }
@@ -26,7 +26,7 @@ namespace Tangy_DataAccess
         [Required]
         public string Status { get; set; }
 
-        // stripe payment
+        //stripe payment
         public string? SessionId { get; set; }
         public string? PaymentIntentId { get; set; }
 
@@ -48,5 +48,6 @@ namespace Tangy_DataAccess
 
         public string? Tracking { get; set; }
         public string? Carrier { get; set; }
+
     }
 }
