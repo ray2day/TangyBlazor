@@ -24,6 +24,7 @@ namespace TangyWeb_API.Controllers
         {
             try
             {
+
                 var domain = _configuration.GetValue<string>("Tangy_Client_URL");
 
                 var options = new SessionCreateOptions
@@ -35,6 +36,7 @@ namespace TangyWeb_API.Controllers
                     PaymentMethodTypes = new List<string> { "card" }
                 };
 
+
                 foreach (var item in paymentDTO.Order.OrderDetails)
                 {
                     var sessionLineItem = new SessionLineItemOptions
@@ -43,7 +45,7 @@ namespace TangyWeb_API.Controllers
                         {
                             UnitAmount = (long)(item.Price*100), //20.00 -> 2000
                             Currency="usd",
-                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            ProductData= new SessionLineItemPriceDataProductDataOptions
                             {
                                 Name= item.Product.Name
                             }

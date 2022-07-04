@@ -54,7 +54,7 @@ else
             </div>
 
             <div class="col-12 col-lg-5 p-4 ml-4 ml-md-0 mt-4 mt-md-0 border">
-                <EditForm Model="Order.OrderHeader" OnValidSubmit="HandleCheckout">
+                <EditForm Model="Order.OrderHeader"  OnValidSubmit="HandleCheckout">
                     <DataAnnotationsValidator />
                     <div class="row px-2 text-success border-bottom"><div class="col-7 py-1"><p style="font-size:x-large;margin:0px;">Enter Details</p></div></div>
 
@@ -162,18 +162,21 @@ else
             IsProcessing=true;
             var paymentDto = new StripePaymentDTO()
                 {
-                    Order = Order
+                    Order= Order
                 };
 
             var result = await _paymentService.Checkout(paymentDto);
 
-            Order.OrderHeader.SessionId= result.Data.ToString();
+            var StripeSessionAndPI = result.Data.ToString().Split(';');
+
+            Order.OrderHeader.SessionId= StripeSessionAndPI[0];
+            Order.OrderHeader.PaymentIntentId= StripeSessionAndPI[1];
 
             var orderDTOSaved = await _orderService.Create(paymentDto);
 
-            await _localStorage.SetItemAsync(SD.Local_UserDetails, orderDTOSaved);
+             await _localStorage.SetItemAsync(SD.Local_OrderDetails, orderDTOSaved);
 
-            await _jsRuntime.InvokeVoidAsync("redirectToCheckout", result.Data.ToString());
+            await _jsRuntime.InvokeVoidAsync("redirectToCheckout", StripeSessionAndPI[0]);
         }
         catch(Exception e)
         {
