@@ -50,7 +50,7 @@
     {
         IsProcessing = true;
         Order = await _localStorage.GetItemAsync<OrderDTO>(SD.Local_OrderDetails);
-        //add logic to check payment and update status
+        // add logic to check payment and update status
 
         var updatedOrder = await _orderService.MarkPaymentSuccessful(Order.OrderHeader);
         if (updatedOrder.Status == SD.Status_Confirmed)

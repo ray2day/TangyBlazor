@@ -38,7 +38,7 @@ else
                     </div>
                     <div class="col-4 col-md-5 " style="text-align:right;">
                         <h4 class="text-warning font-weight-bold pt-2">
-                            USD
+                            EUR
                             <span style="border-bottom:1px solid #ff6a00">
                                  @((prod.Count * prod.Price).ToString("c"))
                             </span>
@@ -174,7 +174,7 @@ else
 
             var orderDTOSaved = await _orderService.Create(paymentDto);
 
-             await _localStorage.SetItemAsync(SD.Local_OrderDetails, orderDTOSaved);
+            await _localStorage.SetItemAsync(SD.Local_OrderDetails, orderDTOSaved);
 
             await _jsRuntime.InvokeVoidAsync("redirectToCheckout", StripeSessionAndPI[0]);
         }
