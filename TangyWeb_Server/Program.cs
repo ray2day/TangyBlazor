@@ -11,7 +11,7 @@ using TangyWeb_Server.Service.IService;
 using Microsoft.AspNetCore.Identity;
 using Stripe;
 
-Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NjAzMjM1QDMxMzkyZTM0MmUzMFlIN1g2aUtjdFdWQjhleGlKakdBUGFTemNxbllaS2IrNFNEeHU0K1MrajA9");
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mgo+DSMBMAY9C3t2VVhiQlFadVlJXGFWfVJpTGpQdk5xdV9DaVZUTWY/P1ZhSXxRdkJjX39fcXJRRGZUWUU=;NjY5NTgyQDMyMzAyZTMyMmUzMGQ4UDJacEliWnVyMUVqWk00K0Q4VitmWUlwb0wzRGJoSm9sOUlRUVJjNFU9");
 
 var builder = WebApplication.CreateBuilder(args);
 
